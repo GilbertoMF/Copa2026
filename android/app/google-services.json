@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "185407563203",
+    "project_id": "gen-lang-client-0518052903",
+    "storage_bucket": "gen-lang-client-0518052903.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185407563203:android:7074ec9148812ae8b3c976",
+        "android_client_info": {
+          "package_name": "com.copa2026.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185407563203-web.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaJBy3jh49ip4_lNvP4afAfm8mD5OQNTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185407563203-web.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
