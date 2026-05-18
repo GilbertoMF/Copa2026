@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-game-bg: #05070a;
+  --color-game-green: #00ff88;
+  --color-game-panel: rgba(255, 255, 255, 0.03);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .glass-panel {
+    background-color: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .neon-border {
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.1);
+  }
+
+  .neon-text {
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+  }
+
+  .stat-bar {
+    background-color: #1a1d23;
+  }
+
+  .stat-progress {
+    background-color: #00ff88;
+    box-shadow: 0 0 10px #00ff88;
+  }
+
+  .card-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-shine::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 45%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.1) 55%, transparent 100%);
+    transform: rotate(45deg);
+    pointer-events: none;
+  }
+}

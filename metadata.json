@@ -1,0 +1,8 @@
+{
+  "name": "Copa 2026 - Álbum Legends",
+  "description": "Jogo interativo de coleção de figurinhas da Copa do Mundo 2026 com pacotes, raridades e trocas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

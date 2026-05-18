@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile containing level, xp, coins, and sticker inventory",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "level": { "type": "number" },
+        "xp": { "type": "number" },
+        "coins": { "type": "number" },
+        "inventory": { 
+          "type": "object",
+          "description": "Map of sticker ID to quantity" 
+        },
+        "packs": {
+          "type": "object",
+          "description": "Map of pack ID to quantity"
+        },
+        "openedPacks": { "type": "number" },
+        "lastDailyReward": { "type": "number" },
+        "name": { "type": "string" }
+      },
+      "required": ["userId", "level", "xp", "coins"]
+    },
+    "TradeOffer": {
+      "title": "Trade Offer",
+      "description": "A global sticker trade offer created by a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "offering": { "type": "string", "description": "Sticker ID offered" },
+        "requesting": { "type": "string", "description": "Sticker ID requested" },
+        "timestamp": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "completed", "cancelled"] }
+      },
+      "required": ["id", "senderId", "senderName", "offering", "requesting", "timestamp", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and progression state"
+    },
+    "/trades/{tradeId}": {
+      "schema": { "$ref": "#/entities/TradeOffer" },
+      "description": "Active and past trade offers globally available"
+    }
+  }
+}
