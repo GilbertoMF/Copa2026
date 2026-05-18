@@ -3,7 +3,9 @@ import { TradeOffer, UserState } from '../types';
 import { PACKS, STICKERS } from '../data/stickers';
 import { playSound } from '../utils/audio';
 
-import { onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, User, getRedirectResult } from 'firebase/auth';
+import { onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, User, getRedirectResult, signInWithCredential } from 'firebase/auth';
+import { Capacitor } from '@capacitor/core';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { doc, setDoc, onSnapshot, updateDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { Trophy } from 'lucide-react';
@@ -343,10 +345,19 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     playSound('click');
   };
 
-  const handleLogin = () => {
-    const provider = new GoogleAuthProvider();
-    // Use redirect for mobile webview compatibility
-    signInWithRedirect(auth, provider).catch(console.error);
+  const handleLogin = async () => {
+    if (Capacitor.isNativePlatform()) {
+      try {
+        const googleUser = await GoogleAuth.signIn();
+        const credential = GoogleAuthProvider.credential(googleUser.authentication.idToken);
+        await signInWithCredential(auth, credential);
+      } catch (error) {
+        console.error("Native Google Auth Error:", error);
+      }
+    } else {
+      const provider = new GoogleAuthProvider();
+      signInWithRedirect(auth, provider).catch(console.error);
+    }
   };
 
   const handleSignOut = () => {
