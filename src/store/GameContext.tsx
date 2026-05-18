@@ -3,7 +3,7 @@ import { TradeOffer, UserState } from '../types';
 import { PACKS, STICKERS } from '../data/stickers';
 import { playSound } from '../utils/audio';
 
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
+import { onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, User, getRedirectResult } from 'firebase/auth';
 import { doc, setDoc, onSnapshot, updateDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { Trophy } from 'lucide-react';
@@ -47,9 +47,22 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Auth Effect
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
-      setUser(u);
-      setLoadingAuth(false);
-      if (!u) setState(null);
+      if (u) {
+        setUser(u);
+        setLoadingAuth(false);
+      } else {
+        // Check for redirect result
+        try {
+          const result = await getRedirectResult(auth);
+          if (result?.user) {
+            setUser(result.user);
+          }
+        } catch (error) {
+          console.error("Auth Redirect Error:", error);
+        }
+        setLoadingAuth(false);
+        if (!u) setState(null);
+      }
     });
     return unsub;
   }, []);
@@ -332,7 +345,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const handleLogin = () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).catch(console.error);
+    // Use redirect for mobile webview compatibility
+    signInWithRedirect(auth, provider).catch(console.error);
   };
 
   const handleSignOut = () => {
