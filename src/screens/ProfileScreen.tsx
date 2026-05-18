@@ -7,7 +7,7 @@ export const ProfileScreen: React.FC = () => {
   const { state, resetProgress, sellAllDuplicates, toggleSound } = useGame();
   
   const totalCollected = Object.keys(state.inventory).length;
-  const dupesCount = Object.values(state.inventory).reduce((acc, count) => (acc as number) + Math.max(0, (count as number) - 1), 0);
+  const dupesCount = Object.values(state.inventory).reduce((acc: number, count: any) => acc + Math.max(0, (Number(count) || 0) - 1), 0) as number;
 
   const handleRecycle = () => {
     if (dupesCount === 0) {
